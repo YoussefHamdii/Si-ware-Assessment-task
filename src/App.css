@@ -1,0 +1,140 @@
+/* global styling */
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+.link, .link:hover{
+  text-decoration: none;
+  color: black;
+}
+
+/* navigation styling */
+.navigation-container{
+  margin-top: 20px;
+}
+
+.navigation-list{
+  display: flex;
+  justify-content: center;
+}
+
+.navigation-item{
+  list-style: none;
+  margin: 0px 50px 0px 50px;
+  padding: 5px;
+  font-size: large;
+  font-weight:300;
+}
+
+.navigation-item-selected{
+  border-bottom: 1px #495fa8e3 solid;
+}
+
+/* home styling */
+
+.home-container{
+  margin: 50px;
+  display: flex;
+  box-shadow: 16px 11px 62px -10px rgba(0,0,0,0.6);
+}
+
+.home-backgroung{
+  width: 25%;
+  background-color: #486ab1;
+}
+
+.home-companies {
+  width: 75%;
+  padding: 50px;
+}
+
+/* company element styling */
+
+.company-container{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  margin-bottom: 20px;
+}
+
+.company-info{
+  width: 50%;
+}
+
+.company-buttons button{
+  display: block;
+  width: 200px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+}
+.edit-button{
+  background-color: #565e64;
+}
+
+.delete-button{
+  background-color: #A63737;
+}
+
+.button-icon{
+  width: 20px;
+}
+
+/* add a company page styling */
+
+.form-container{
+  margin: 50px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 16px 11px 62px -10px rgba(0,0,0,0.6);
+}
+
+.form-background {
+  width: 50%;
+  background-image: url('../public/form-background.jpg');
+  color: white;
+  font-weight: bold;
+  font-size: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form{
+  width: 50%;
+  padding: 50px;
+}
+
+input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+datalist, option{
+  width: 100% !important;
+}
+
+.add-company-button{
+  width: 100%;
+  padding: 10px;
+  color: white;
+  background-color: #495fa8;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
