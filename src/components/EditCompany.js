@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
-function AddCompany(props) {
+function EditCompany(props) {
   const [companyDetails, setCompanyDetails] = useState({});
   const [industryTypes, setIndustryTypes] = useState([]);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [countryCities, setCountryCities] = useState([]);
+  let {companyName} = useParams();
 
-  const initialiseData = () => {
+  const initialiseData = () =>{
     const countriesData = require("../json mockups/countries.json");
     const citiesData = require("../json mockups/cities.json");
     const industryTypesData = require("../json mockups/industryTypes.json");
+    const companyDetailsData = props.companies.find(selectedCompany => selectedCompany.name === companyName);
+    
     setCountries(countriesData.data);
     setCities(citiesData.data);
     setIndustryTypes(industryTypesData.data);
+    setCompanyDetails(companyDetailsData && companyDetailsData);
   }
 
   useEffect(() => {
@@ -40,13 +45,13 @@ function AddCompany(props) {
   };
 
   return (
-    <div className="form-container">
-      <div className="form-background">
+    <div className="form-container-edit">
+      <div className="form-background-edit">
         <span className="form-background-text">
-          ADD A COMPANY TO THE SYSTEM
+          EDIT A COMPANY IN THE SYSTEM
         </span>
       </div>
-      <form>
+      <form className="form-edit">
         <div>
           <label for="name">Company Name</label>
           <input
@@ -76,8 +81,8 @@ function AddCompany(props) {
         <div>
           <label for="industryType">Industry Type</label>
           <Autocomplete
-            disablePortal
-            options={industryTypes}
+            value={companyDetails.industryType ? companyDetails.industryType:''}
+            options={industryTypes && industryTypes}
             className="dropdown"
             onChange={(event, newvalue) =>
               setCompanyDetails({
@@ -86,7 +91,7 @@ function AddCompany(props) {
               })
             }
             renderInput={(params) => (
-              <TextField {...params} placeholder="industry type" size="small" />
+              <TextField {...params} placeholder="industry type" size="small" value={companyDetails.industryType} />
             )}
           />
           <label for="address">Address</label>
@@ -107,19 +112,19 @@ function AddCompany(props) {
         <div>
           <label for="country">Country</label>
           <Autocomplete
-            disablePortal
-            options={countries}
+            value={companyDetails.country?companyDetails.country:''}
+            options={countries&&countries}
             className="dropdown"
             onChange={(event, newvalue) => handleCountryChange(newvalue)}
             renderInput={(params) => (
-              <TextField {...params} placeholder="country" size="small" />
+              <TextField {...params} placeholder="country" size="small"/>
             )}
           />
 
           <label for="city">City</label>
           <Autocomplete
-            disablePortal
-            options={countryCities}
+            value={companyDetails.city?companyDetails.city:''}
+            options={countryCities && countryCities}
             className="dropdown"
             onChange={(event, newvalue) =>
               setCompanyDetails({
@@ -133,11 +138,11 @@ function AddCompany(props) {
           />
         </div>
         <button className="add-company-button" onClick={(e) => handleSubmit(e)}>
-          ADD COMPANY
+          SAVE
         </button>
       </form>
     </div>
   );
 }
 
-export default AddCompany;
+export default EditCompany;

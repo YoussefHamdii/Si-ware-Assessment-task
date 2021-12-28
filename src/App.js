@@ -3,6 +3,7 @@ import './App.css';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import AddCompany from './components/AddCompany';
+import EditCompany from './components/EditCompany';
 import {
   BrowserRouter as Router,
   Routes,
@@ -37,6 +38,7 @@ function App() {
         <Navigation />
         <Routes>
           <Route exact path="/" element={<Home companies={companies} deleteCompany={deleteCompany}/>} />
+          <Route path="/company/edit/:companyName" element={<EditCompany addCompanies={addCompanies} companies={companies}/>} />
           <Route path="/company/add" element={<AddCompany addCompanies={addCompanies}/>} />
         </Routes>
       </div>

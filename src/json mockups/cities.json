@@ -1,0 +1,31 @@
+{
+    "data":{
+        "Egypt":[
+                "Cairo",
+                "Giza",
+                "Alex",
+                "Luxor",
+                "Aswan"
+            ]
+        ,
+        "United Kingdom": [
+                "London",
+                "Kent",
+                "Cambridge",
+                "Manchester"
+            ]
+        ,
+        "France": [
+                "Paris",
+                "Lyon",
+                "Calais"
+            ]
+        ,
+        "Germany": [
+                "Berlin",
+                "Munich",
+                "Frankfurt",
+                "Hamburg"
+            ]
+    }
+}

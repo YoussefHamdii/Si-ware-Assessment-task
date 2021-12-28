@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 
 function CompanyRow(props) {
+
+  const navigate = useNavigate();
 
   return (
     <div className="company-container">
@@ -12,12 +15,12 @@ function CompanyRow(props) {
       </div>
       <div className="company-buttons">
         
-        <button className="edit-button">
-          <img src="./edit.png" alt="edit-icon" className="button-icon" />
+        <button className="edit-button" onClick={() => navigate(`/company/edit/${props.companyInfo.name}`)}>
+          Edit
         </button>
 
         <button className="delete-button" onClick={() => props.adjustComapniesHandler(props.companyInfo.name)}>
-          <img src="./delete.png" alt="delete-icon" className="button-icon" />
+          Delete
         </button>
 
       </div>

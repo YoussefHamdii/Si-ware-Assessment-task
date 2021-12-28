@@ -9,6 +9,11 @@
   color: black;
 }
 
+::placeholder{
+  font-size: small;
+  color: #c1c1c4;
+}
+
 /* navigation styling */
 .navigation-container{
   margin-top: 20px;
@@ -37,16 +42,33 @@
   margin: 50px;
   display: flex;
   box-shadow: 16px 11px 62px -10px rgba(0,0,0,0.6);
+  min-height: 625px;
 }
 
 .home-backgroung{
   width: 25%;
   background-color: #486ab1;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
 }
 
 .home-companies {
   width: 75%;
   padding: 50px;
+}
+
+.search-input{
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 10px 0px;
+  margin: 5px auto;
+}
+
+.search-group{
+  margin: 10px 0;
 }
 
 /* company element styling */
@@ -114,9 +136,9 @@ form{
   padding: 50px;
 }
 
-input {
+.input-field {
   width: 100%;
-  padding: 12px 20px;
+  padding: 12px 15px;
   margin: 8px 0;
   display: block;
   border: 1px solid #ccc;
@@ -124,8 +146,10 @@ input {
   box-sizing: border-box;
 }
 
-datalist, option{
-  width: 100% !important;
+.dropdown{
+  width: 100%;
+  display: block;
+  margin: 10px 0;
 }
 
 .add-company-button{
@@ -137,4 +161,38 @@ datalist, option{
   border-style: none;
   box-sizing: border-box;
   cursor: pointer;
+}
+
+/* edit company styling */
+
+.form-container-edit{
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 50px;
+  margin-top: 50px;
+  
+}
+
+.form-background-edit{
+  width: 100%;
+  height: 75px;
+  background-image: url('../public/form-background.jpg');
+  color: white;
+  font-weight: bold;
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 16px 11px 62px -10px rgba(0,0,0,0.6);
+}
+
+.form-edit{
+  width: 100%;
+  padding: 0px;
+  margin-top: 25px;
 }
