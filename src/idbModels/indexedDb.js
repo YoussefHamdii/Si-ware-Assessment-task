@@ -6,7 +6,10 @@ export class CompanyDB extends Dexie {
   constructor() {
     super('CompanyDB');
     this.version(1).stores({
-      companies: 'name, description, industryType, isActive, address, country, city'
+      companies: 'name, description, industryType, isActive, address, country, city',
+      countries: '++, values',
+      cities: '++, values',
+      industryType: '++, values'
     });
   }
 

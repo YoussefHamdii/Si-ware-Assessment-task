@@ -1,22 +1,8 @@
 import React, { useState } from "react";
-import CompanyRow from "./CompanyRow";
+import DataObserver from "./dataObserver";
 
-function Home(props) {
+function Home() {
   const [searchField, setSearchField] = useState("");
-
-  const displayCompanies = () => {
-    return(
-      props.companies.map((company, index) =>
-        company.isActive === true && company.name.includes(searchField) ? (
-          <CompanyRow
-            key={index}
-            companyInfo={company}
-            adjustComapniesHandler={props.deleteCompany}
-          />
-        ) : null
-      )
-    );
-  }
 
   return (
     <div className="home-container">
@@ -33,7 +19,7 @@ function Home(props) {
             onChange={(e) => setSearchField(e.target.value)}
           />
         </div>
-        {displayCompanies()}
+        <DataObserver searchField={searchField} />
       </div>
     </div>
   );

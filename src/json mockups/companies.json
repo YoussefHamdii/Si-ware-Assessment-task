@@ -4,7 +4,7 @@
             "name": "company1",
             "description": "hellooo",
             "industryType": "Software",
-            "isActive": true,
+            "isActive": 1,
             "address": "st. 1",
             "country": "Egypt",
             "city": "Cairo"
@@ -13,7 +13,7 @@
             "name": "company2",
             "description": "hellooo",
             "industryType": "Software",
-            "isActive": true,
+            "isActive": 0,
             "address": "st. 1",
             "country": "Egypt",
             "city": "Cairo"
@@ -22,7 +22,7 @@
             "name": "company3",
             "description": "hellooo",
             "industryType": "Sales",
-            "isActive": false,
+            "isActive": 1,
             "address": "st. 1",
             "country": "Egypt",
             "city": "Cairo"
@@ -31,7 +31,7 @@
             "name": "company4",
             "description": "hellooo",
             "industryType": "Sales",
-            "isActive": true,
+            "isActive": 1,
             "address": "st. 1",
             "country": "Germany",
             "city": "Berlin"
@@ -40,7 +40,7 @@
             "name": "company5",
             "description": "hellooo hi how are you",
             "industryType": "Development",
-            "isActive": true,
+            "isActive": 1,
             "address": "st. 1",
             "country": "France",
             "city": "Paris"

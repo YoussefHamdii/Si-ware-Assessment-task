@@ -1,24 +1,52 @@
-import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-// const pagesArray = ['Company List', 'Add Company'];
+const pagesArray = [
+  { name: "Company List", link: "/" },
+  { name: "Add Company", link: "/company/add" },
+];
 
 function Navigation() {
+  const [selected, setSelected] = useState(0);
 
-    const [selected, setSelected] = useState(1);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    return (
-      <div className="navigation-container">
-        <ul className="navigation-list">
-            <li className={selected === 1?"navigation-item navigation-item-selected":"navigation-item"} onClick={() => setSelected(1)}>
-                <Link className='link' to="/">COMPANY LIST</Link>
-            </li>
-            <li className={selected === 2?"navigation-item navigation-item-selected":"navigation-item"} onClick={() => setSelected(2)}>
-                <Link className='link' to="/company/add">ADD COMPANY</Link>
-            </li>
-        </ul>
-      </div>
+  useEffect(() => {
+    const initialLocation = pagesArray.find(
+      (navItem) => navItem.link === location.pathname
     );
-  }
-  
-  export default Navigation;
+    const locationIndex = pagesArray.indexOf(initialLocation);
+
+    setSelected(locationIndex);
+  }, []);
+
+  const clickHandler = (index) => {
+    setSelected(index);
+    const link = pagesArray[index].link;
+    navigate(link);
+  };
+
+  const displayNavItems = () => {
+    return pagesArray.map((navItem, index) => (
+      <li
+        className={
+          selected === index
+            ? "navigation-item navigation-item-selected"
+            : "navigation-item"
+        }
+        onClick={() => clickHandler(index)}
+      >
+        {navItem.name}
+      </li>
+    ));
+  };
+
+  return (
+    <div className="navigation-container">
+      <ul className="navigation-list">{displayNavItems()}</ul>
+    </div>
+  );
+}
+
+export default Navigation;

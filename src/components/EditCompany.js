@@ -5,29 +5,31 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { useNavigate } from "react-router-dom";
 import { db } from "../idbModels/indexedDb";
 
-function EditCompany(props) {
-    
+function EditCompany() {
   const [companyDetails, setCompanyDetails] = useState({});
   const [industryTypes, setIndustryTypes] = useState([]);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [countryCities, setCountryCities] = useState([]);
-  const {companyName} = useParams();
+
+  const { companyName } = useParams();
   const navigate = useNavigate();
 
-  const initialiseData = async () =>{
-    const countriesData = require("../json mockups/countries.json");
-    const citiesData = require("../json mockups/cities.json");
-    const industryTypesData = require("../json mockups/industryTypes.json");
-    const companyDetailsData = await db.companies.get(companyName);
+  const initialiseData = async () => {
+    try {
+      const countriesData = await db.countries.get(1);
+      const citiesData = await db.cities.get(1);
+      const industryTypesData = await db.industryType.get(1);
+      const companyDetailsData = await db.companies.get(companyName);
 
-    console.log(companyDetailsData);
-    
-    setCountries(countriesData.data);
-    setCities(citiesData.data);
-    setIndustryTypes(industryTypesData.data);
-    setCompanyDetails(companyDetailsData && companyDetailsData);
-  }
+      setCountries(countriesData);
+      setCities(citiesData);
+      setIndustryTypes(industryTypesData);
+      setCompanyDetails(companyDetailsData);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     initialiseData();
@@ -37,23 +39,19 @@ function EditCompany(props) {
     const newCompanyObj = {
       ...companyDetails,
       country: chosenCountry,
+      city: "",
     };
     setCompanyDetails(newCompanyObj);
 
     let chosenCities = cities[chosenCountry];
+
     setCountryCities(chosenCities);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    db.companies.update(companyName, {...companyDetails}).then(function (updated) {
-      if (updated)
-        console.log (`${companyName} found`);
-      else
-        console.log ("Nothing was updated - there were no friend with primary key: 2");
-    });
-    navigate('/');
-    window.location.reload();
+    await db.companies.update(companyName, { ...companyDetails });
+    navigate("/");
   };
 
   return (
@@ -94,7 +92,9 @@ function EditCompany(props) {
         <div>
           <label for="industryType">Industry Type</label>
           <Autocomplete
-            value={companyDetails.industryType ? companyDetails.industryType:''}
+            value={
+              companyDetails.industryType ? companyDetails.industryType : ""
+            }
             options={industryTypes && industryTypes}
             className="dropdown"
             onChange={(event, newvalue) =>
@@ -104,7 +104,12 @@ function EditCompany(props) {
               })
             }
             renderInput={(params) => (
-              <TextField {...params} placeholder="industry type" size="small" value={companyDetails.industryType} />
+              <TextField
+                {...params}
+                placeholder="industry type"
+                size="small"
+                value={companyDetails.industryType}
+              />
             )}
           />
           <label for="address">Address</label>
@@ -125,18 +130,18 @@ function EditCompany(props) {
         <div>
           <label for="country">Country</label>
           <Autocomplete
-            value={companyDetails.country?companyDetails.country:''}
-            options={countries&&countries}
+            value={companyDetails.country ? companyDetails.country : ""}
+            options={countries && countries}
             className="dropdown"
             onChange={(event, newvalue) => handleCountryChange(newvalue)}
             renderInput={(params) => (
-              <TextField {...params} placeholder="country" size="small"/>
+              <TextField {...params} placeholder="country" size="small" />
             )}
           />
 
           <label for="city">City</label>
           <Autocomplete
-            value={companyDetails.city?companyDetails.city:''}
+            value={companyDetails.city ? companyDetails.city : ""}
             options={countryCities && countryCities}
             className="dropdown"
             onChange={(event, newvalue) =>
