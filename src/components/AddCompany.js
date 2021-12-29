@@ -5,11 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../idbModels/indexedDb";
 
 function AddCompany() {
+  
   const [companyDetails, setCompanyDetails] = useState({});
   const [industryTypes, setIndustryTypes] = useState([]);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [countryCities, setCountryCities] = useState([]);
+  const [errors, setErrors] = useState({});
 
   const navigate = useNavigate();
 
@@ -45,10 +47,33 @@ function AddCompany() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const companyToAdd = { ...companyDetails, isActive: 1 };
-    await db.companies.add({
-      ...companyToAdd,
-    });
-    navigate("/");
+    const companyExist = await db.companies.get(companyToAdd.name);
+
+    let errors = { addingError: "", mandatoryFieldsError: "" };
+
+    if (Object.keys(companyToAdd).length < 7) {
+      errors = { ...errors, mandatoryFieldsError: "Please fill in all fields" };
+    }
+
+    if (companyExist) {
+      errors = {
+        ...errors,
+        addingError: "Name already exist, please enter a unique name.",
+      };
+    }
+
+    setErrors(errors);
+
+    try {
+      if (errors.addingError === "" && errors.mandatoryFieldsError === "") {
+        await db.companies.add({
+          ...companyToAdd,
+        });
+        navigate("/");
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -70,6 +95,9 @@ function AddCompany() {
               setCompanyDetails({ ...companyDetails, name: event.target.value })
             }
           />
+
+          <div className="error-message">{errors.addingError}</div>
+
           <label for="description">Description</label>
           <input
             type="text"
@@ -144,6 +172,9 @@ function AddCompany() {
             )}
           />
         </div>
+
+        <div className="error-message">{errors.mandatoryFieldsError}</div>
+
         <button className="add-company-button" onClick={(e) => handleSubmit(e)}>
           ADD COMPANY
         </button>

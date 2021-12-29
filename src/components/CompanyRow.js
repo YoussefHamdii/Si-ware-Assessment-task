@@ -16,10 +16,19 @@ function CompanyRow(props) {
   return (
     <div className="company-container">
       <div className="company-info">
-        <h2>{props.companyInfo.name}</h2>
+        <p>{props.companyInfo.name}</p>
+
         <p>{props.companyInfo.description}</p>
+
         <p>{props.companyInfo.industryType}</p>
-        <p>{`${props.companyInfo.address}, ${props.companyInfo.city}, ${props.companyInfo.country}`}</p>
+
+        {props.companyInfo.address &&
+        props.companyInfo.city &&
+        props.companyInfo.country ? (
+          <p>{`${props.companyInfo.address}, ${props.companyInfo.city}, ${props.companyInfo.country}`}</p>
+        ) : (
+          <p></p>
+        )}
       </div>
       <div className="company-buttons">
         <button

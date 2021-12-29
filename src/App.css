@@ -42,12 +42,12 @@
 .home-container{
   margin: 50px;
   display: flex;
-  box-shadow: 16px 11px 62px -10px rgba(0,0,0,0.6);
   min-height: 625px;
+  box-shadow: 38px 14px 166px -105px rgba(0,0,0,0.75);
 }
 
 .home-backgroung{
-  width: 25%;
+  width: 10%;
   background-color: #486ab1;
   display: flex;
   justify-content: center;
@@ -55,7 +55,7 @@
 }
 
 .home-companies {
-  width: 75%;
+  width: 90%;
   padding: 50px;
 }
 
@@ -64,7 +64,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  padding: 10px 0px;
+  padding: 10px 10px;
   margin: 5px auto;
 }
 
@@ -82,7 +82,27 @@
 }
 
 .company-info{
-  width: 50%;
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.company-info p{
+  width: 100%;
+  text-align: left;
+  align-self: center;
+}
+
+.company-info-headers{
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.company-info-headers h3{
+  width: 100%;
+  text-align: left;
 }
 
 .company-buttons button{
@@ -118,7 +138,7 @@
   margin: 50px;
   display: flex;
   justify-content: space-between;
-  box-shadow: 16px 11px 62px -10px rgba(0,0,0,0.6);
+  box-shadow: 88px 59px 203px -81px rgba(0,0,0,0.75);
 }
 
 .form-background {
@@ -189,11 +209,19 @@ form{
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 16px 11px 62px -10px rgba(0,0,0,0.6);
+  box-shadow: 175px -83px 119px -61px rgba(0,0,0,0.75);
 }
 
 .form-edit{
   width: 100%;
   padding: 0px;
   margin-top: 25px;
+}
+
+/* error styling */
+
+.error-message{
+  color: red;
+  margin: 1px 0;
+  font-size: small;
 }

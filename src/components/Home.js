@@ -19,6 +19,12 @@ function Home() {
             onChange={(e) => setSearchField(e.target.value)}
           />
         </div>
+        <div className="company-info-headers">
+          <h3>Name</h3>
+          <h3>Description</h3>
+          <h3>Industry Type</h3>
+          <h3>Address</h3>
+      </div>
         <DataObserver searchField={searchField} />
       </div>
     </div>

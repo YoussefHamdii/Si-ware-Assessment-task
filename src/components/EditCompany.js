@@ -6,11 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../idbModels/indexedDb";
 
 function EditCompany() {
+  
   const [companyDetails, setCompanyDetails] = useState({});
   const [industryTypes, setIndustryTypes] = useState([]);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [countryCities, setCountryCities] = useState([]);
+  const [errors, setErrors] = useState({});
 
   const { companyName } = useParams();
   const navigate = useNavigate();
@@ -43,15 +45,34 @@ function EditCompany() {
     };
     setCompanyDetails(newCompanyObj);
 
-    let chosenCities = cities[chosenCountry];
-
-    setCountryCities(chosenCities);
+    if (chosenCountry !== null) {
+      let chosenCities = cities[chosenCountry];
+      setCountryCities(chosenCities);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await db.companies.update(companyName, { ...companyDetails });
-    navigate("/");
+    let errors = { mandatoryFieldsError: "" };
+
+    if (
+      companyDetails.description === "" ||
+      companyDetails.country === null ||
+      companyDetails.city === null ||
+      companyDetails.industryType === ""
+    ) {
+      errors = { ...errors, mandatoryFieldsError: "Please fill in all fields" };
+      setErrors(errors);
+    }
+
+    try {
+      if (errors.mandatoryFieldsError === "") {
+        await db.companies.update(companyName, { ...companyDetails });
+        navigate("/");
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -66,6 +87,7 @@ function EditCompany() {
         <div>
           <label for="name">Company Name</label>
           <input
+            disabled
             type="text"
             placeholder="name"
             className="input-field"
@@ -155,6 +177,7 @@ function EditCompany() {
             )}
           />
         </div>
+        <div className="error-message">{errors.mandatoryFieldsError}</div>
         <button className="add-company-button" onClick={(e) => handleSubmit(e)}>
           SAVE
         </button>
