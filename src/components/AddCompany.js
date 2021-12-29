@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import { useNavigate } from "react-router-dom";
+import { db } from "../idbModels/indexedDb";
 
 function AddCompany(props) {
+
   const [companyDetails, setCompanyDetails] = useState({});
   const [industryTypes, setIndustryTypes] = useState([]);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [countryCities, setCountryCities] = useState([]);
+  const navigate = useNavigate();
 
   const initialiseData = () => {
     const countriesData = require("../json mockups/countries.json");
     const citiesData = require("../json mockups/cities.json");
     const industryTypesData = require("../json mockups/industryTypes.json");
+
     setCountries(countriesData.data);
     setCities(citiesData.data);
     setIndustryTypes(industryTypesData.data);
@@ -33,10 +38,14 @@ function AddCompany(props) {
     setCountryCities(chosenCities);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    props.addCompanies(companyDetails);
-    console.log("submitted");
+    const companyToAdd = {...companyDetails, "isActive": true};
+    await db.companies.add({
+      ...companyToAdd
+    });
+    navigate('/');
+    window.location.reload();
   };
 
   return (

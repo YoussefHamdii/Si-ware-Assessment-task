@@ -2,20 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import { useNavigate } from "react-router-dom";
+import { db } from "../idbModels/indexedDb";
 
 function EditCompany(props) {
+    
   const [companyDetails, setCompanyDetails] = useState({});
   const [industryTypes, setIndustryTypes] = useState([]);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [countryCities, setCountryCities] = useState([]);
-  let {companyName} = useParams();
+  const {companyName} = useParams();
+  const navigate = useNavigate();
 
-  const initialiseData = () =>{
+  const initialiseData = async () =>{
     const countriesData = require("../json mockups/countries.json");
     const citiesData = require("../json mockups/cities.json");
     const industryTypesData = require("../json mockups/industryTypes.json");
-    const companyDetailsData = props.companies.find(selectedCompany => selectedCompany.name === companyName);
+    const companyDetailsData = await db.companies.get(companyName);
+
+    console.log(companyDetailsData);
     
     setCountries(countriesData.data);
     setCities(citiesData.data);
@@ -40,12 +46,19 @@ function EditCompany(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.addCompanies(companyDetails);
-    console.log("submitted");
+    db.companies.update(companyName, {...companyDetails}).then(function (updated) {
+      if (updated)
+        console.log (`${companyName} found`);
+      else
+        console.log ("Nothing was updated - there were no friend with primary key: 2");
+    });
+    navigate('/');
+    window.location.reload();
   };
 
   return (
     <div className="form-container-edit">
+      {console.log(companyDetails)}
       <div className="form-background-edit">
         <span className="form-background-text">
           EDIT A COMPANY IN THE SYSTEM

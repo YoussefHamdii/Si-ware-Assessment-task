@@ -9,14 +9,20 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import { db } from './idbModels/indexedDb';
 
 function App() {
 
   const [companies, setCompanies] = useState([]);
 
+  
+  const getCompaniesData = async () =>{
+    const companiesData = await db.companies.toArray();
+    setCompanies(companiesData);
+  }
+
   useEffect(() => {
-    const companiesData = require("./json mockups/companies.json");
-    setCompanies(companiesData.data);
+    getCompaniesData();
   }, []);
 
   const deleteCompany = (name) => {
@@ -26,11 +32,6 @@ function App() {
     setCompanies(newCompanies);
   };
 
-  const addCompanies = (company) => {
-    company.isActive = true;
-    const newCompanies = [...companies, company];
-    setCompanies(newCompanies);
-  };
 
   return (
     <Router>
@@ -38,8 +39,8 @@ function App() {
         <Navigation />
         <Routes>
           <Route exact path="/" element={<Home companies={companies} deleteCompany={deleteCompany}/>} />
-          <Route path="/company/edit/:companyName" element={<EditCompany addCompanies={addCompanies} companies={companies}/>} />
-          <Route path="/company/add" element={<AddCompany addCompanies={addCompanies}/>} />
+          <Route path="/company/edit/:companyName" element={<EditCompany companies={companies}/>} />
+          <Route path="/company/add" element={<AddCompany/>} />
         </Routes>
       </div>
     </Router>
