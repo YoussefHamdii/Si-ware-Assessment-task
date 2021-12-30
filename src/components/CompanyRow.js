@@ -1,8 +1,9 @@
 import React from "react";
+import CompanyDetails from "./CompanyDetails";
 import { useNavigate } from "react-router-dom";
 import { db } from "../idbModels/indexedDb";
 
-function CompanyRow(props) {
+const CompanyRow = (props) => {
   const navigate = useNavigate();
 
   const deleteButtonHandler = async () => {
@@ -15,21 +16,14 @@ function CompanyRow(props) {
 
   return (
     <div className="company-container">
-      <div className="company-info">
-        <p>{props.companyInfo.name}</p>
-
-        <p>{props.companyInfo.description}</p>
-
-        <p>{props.companyInfo.industryType}</p>
-
-        {props.companyInfo.address &&
-        props.companyInfo.city &&
-        props.companyInfo.country ? (
-          <p>{`${props.companyInfo.address}, ${props.companyInfo.city}, ${props.companyInfo.country}`}</p>
-        ) : (
-          <p></p>
-        )}
-      </div>
+      <CompanyDetails
+        name={props.companyInfo.name}
+        description={props.companyInfo.description}
+        industryType={props.companyInfo.industryType}
+        address={props.companyInfo.address}
+        city={props.companyInfo.city}
+        country={props.companyInfo.country}
+      />
       <div className="company-buttons">
         <button
           className="edit-button"
@@ -44,6 +38,6 @@ function CompanyRow(props) {
       </div>
     </div>
   );
-}
+};
 
 export default CompanyRow;

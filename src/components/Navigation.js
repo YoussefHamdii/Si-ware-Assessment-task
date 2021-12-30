@@ -6,7 +6,7 @@ const pagesArray = [
   { name: "Add Company", link: "/company/add" },
 ];
 
-function Navigation() {
+const Navigation = () => {
   const [selected, setSelected] = useState(0);
 
   const navigate = useNavigate();
@@ -47,6 +47,6 @@ function Navigation() {
       <ul className="navigation-list">{displayNavItems()}</ul>
     </div>
   );
-}
+};
 
 export default Navigation;

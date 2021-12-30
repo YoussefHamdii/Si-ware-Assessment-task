@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
 import { useNavigate } from "react-router-dom";
 import { db } from "../idbModels/indexedDb";
+import InputGroup from "./InputGroup";
 
-function AddCompany() {
-  
+const AddCompany = () => {
   const [companyDetails, setCompanyDetails] = useState({});
   const [industryTypes, setIndustryTypes] = useState([]);
   const [countries, setCountries] = useState([]);
@@ -51,15 +49,26 @@ function AddCompany() {
 
     let errors = { addingError: "", mandatoryFieldsError: "" };
 
-    if (Object.keys(companyToAdd).length < 7) {
+    if (
+      !(
+        companyDetails.name &&
+        companyDetails.description &&
+        companyDetails.country &&
+        companyDetails.city &&
+        companyDetails.industryType &&
+        companyDetails.address
+      )
+    ) {
       errors = { ...errors, mandatoryFieldsError: "Please fill in all fields" };
     }
 
     if (companyExist) {
-      errors = {
-        ...errors,
-        addingError: "Name already exist, please enter a unique name.",
-      };
+      if (companyExist.isActive === 0) {
+        await db.companies.update(companyExist.name, { isActive: 1 });
+        navigate("/");
+      } else {
+        errors = { ...errors, addingError: "Company already exists" };
+      }
     }
 
     setErrors(errors);
@@ -84,94 +93,76 @@ function AddCompany() {
         </span>
       </div>
       <form>
-        <div>
-          <label for="name">Company Name</label>
-          <input
-            type="text"
-            placeholder="name"
-            className="input-field"
-            value={companyDetails.name}
-            onChange={(event) =>
-              setCompanyDetails({ ...companyDetails, name: event.target.value })
-            }
-          />
+        <InputGroup
+          labelName={"Company Name"}
+          inputType={"text"}
+          inputName={"name"}
+          placeholder={"Enter name"}
+          disabled={false}
+          inputValue={companyDetails.name}
+          stateSetter={setCompanyDetails}
+          state={companyDetails}
+        />
+        <div className="error-message">{errors.addingError}</div>
+        <InputGroup
+          labelName={"Description"}
+          inputType={"text"}
+          inputName={"description"}
+          placeholder={"Description"}
+          disabled={false}
+          inputValue={companyDetails.description}
+          stateSetter={setCompanyDetails}
+          state={companyDetails}
+        />
 
-          <div className="error-message">{errors.addingError}</div>
+        <InputGroup
+          labelName={"Industry Type"}
+          inputType={"autoComplete"}
+          inputName={"industryType"}
+          placeholder={"industry type"}
+          options={industryTypes}
+          disabled={false}
+          inputValue={
+            companyDetails.industryType ? companyDetails.industryType : ""
+          }
+          stateSetter={setCompanyDetails}
+          state={companyDetails}
+        />
 
-          <label for="description">Description</label>
-          <input
-            type="text"
-            placeholder="description"
-            className="input-field"
-            value={companyDetails.description}
-            onChange={(event) =>
-              setCompanyDetails({
-                ...companyDetails,
-                description: event.target.value,
-              })
-            }
-          />
-        </div>
+        <InputGroup
+          labelName={"Address"}
+          inputType={"text"}
+          inputName={"address"}
+          placeholder={"address"}
+          disabled={false}
+          inputValue={companyDetails.address}
+          stateSetter={setCompanyDetails}
+          state={companyDetails}
+        />
 
-        <div>
-          <label for="industryType">Industry Type</label>
-          <Autocomplete
-            disablePortal
-            options={industryTypes}
-            className="dropdown"
-            onChange={(event, newvalue) =>
-              setCompanyDetails({
-                ...companyDetails,
-                industryType: newvalue,
-              })
-            }
-            renderInput={(params) => (
-              <TextField {...params} placeholder="industry type" size="small" />
-            )}
-          />
-          <label for="address">Address</label>
-          <input
-            type="text"
-            placeholder="address"
-            className="input-field"
-            value={companyDetails.address}
-            onChange={(event) =>
-              setCompanyDetails({
-                ...companyDetails,
-                address: event.target.value,
-              })
-            }
-          />
-        </div>
+        <InputGroup
+          labelName={"Country"}
+          inputType={"autoComplete"}
+          inputName={"country"}
+          placeholder={"country"}
+          disabled={false}
+          options={countries}
+          inputValue={companyDetails.country ? companyDetails.country : ""}
+          stateSetter={handleCountryChange}
+          state={companyDetails}
+        />
 
-        <div>
-          <label for="country">Country</label>
-          <Autocomplete
-            disablePortal
-            options={countries}
-            className="dropdown"
-            onChange={(event, newvalue) => handleCountryChange(newvalue)}
-            renderInput={(params) => (
-              <TextField {...params} placeholder="country" size="small" />
-            )}
-          />
-
-          <label for="city">City</label>
-          <Autocomplete
-            disablePortal
-            options={countryCities}
-            className="dropdown"
-            onChange={(event, newvalue) =>
-              setCompanyDetails({
-                ...companyDetails,
-                city: newvalue,
-              })
-            }
-            renderInput={(params) => (
-              <TextField {...params} placeholder="city" size="small" />
-            )}
-          />
-        </div>
+        <InputGroup
+          labelName={"City"}
+          inputType={"autoComplete"}
+          inputName={"city"}
+          placeholder={"city"}
+          options={countryCities && countryCities}
+          disabled={false}
+          inputValue={companyDetails.city ? companyDetails.city : ""}
+          stateSetter={setCompanyDetails}
+          state={companyDetails}
+        />
 
         <div className="error-message">{errors.mandatoryFieldsError}</div>
 
@@ -181,6 +172,6 @@ function AddCompany() {
       </form>
     </div>
   );
-}
+};
 
 export default AddCompany;

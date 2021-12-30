@@ -1,8 +1,15 @@
 import React, { useState } from "react";
+import CompanyHeaders from "./CompanyHeaders";
 import DataObserver from "./dataObserver";
 
-function Home() {
+const Home = () => {
   const [searchField, setSearchField] = useState("");
+  const companyHeadersData = [
+    "Name",
+    "Description",
+    "Industry Type",
+    "Address",
+  ];
 
   return (
     <div className="home-container">
@@ -20,15 +27,12 @@ function Home() {
           />
         </div>
         <div className="company-info-headers">
-          <h3>Name</h3>
-          <h3>Description</h3>
-          <h3>Industry Type</h3>
-          <h3>Address</h3>
-      </div>
+          <CompanyHeaders headers={companyHeadersData} />
+        </div>
         <DataObserver searchField={searchField} />
       </div>
     </div>
   );
-}
+};
 
 export default Home;

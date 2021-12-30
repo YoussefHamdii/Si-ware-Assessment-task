@@ -1,49 +1,40 @@
 {
     "data":[
         {
-            "name": "company1",
-            "description": "hellooo",
+            "name": "Microsoft",
+            "description": "Tech company",
             "industryType": "Software",
             "isActive": 1,
-            "address": "st. 1",
-            "country": "Egypt",
-            "city": "Cairo"
-        },
-        {
-            "name": "company2",
-            "description": "hellooo",
-            "industryType": "Software",
-            "isActive": 0,
-            "address": "st. 1",
-            "country": "Egypt",
-            "city": "Cairo"
-        },
-        {
-            "name": "company3",
-            "description": "hellooo",
-            "industryType": "Sales",
-            "isActive": 1,
-            "address": "st. 1",
-            "country": "Egypt",
-            "city": "Cairo"
-        },
-        {
-            "name": "company4",
-            "description": "hellooo",
-            "industryType": "Sales",
-            "isActive": 1,
-            "address": "st. 1",
-            "country": "Germany",
-            "city": "Berlin"
-        },
-        {
-            "name": "company5",
-            "description": "hellooo hi how are you",
-            "industryType": "Development",
-            "isActive": 1,
-            "address": "st. 1",
+            "address": "Silicon valley",
             "country": "France",
             "city": "Paris"
+        },
+        {
+            "name": "Si-ware",
+            "description": "Egyptian company",
+            "industryType": "Software",
+            "isActive": 1,
+            "address": "Sheraton",
+            "country": "Egypt",
+            "city": "Cairo"
+        },
+        {
+            "name": "Dell",
+            "description": "Tech company",
+            "industryType": "Sales",
+            "isActive": 0,
+            "address": "Main street",
+            "country": "Germany",
+            "city": "Munich"
+        },
+        {
+            "name": "Egyptian steel",
+            "description": "Egyptian company",
+            "industryType": "Development",
+            "isActive": 1,
+            "address": "Alex. road",
+            "country": "Egypt",
+            "city": "Cairo"
         }
     ]
 }
